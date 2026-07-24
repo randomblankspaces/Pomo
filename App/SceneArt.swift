@@ -252,17 +252,8 @@ struct ThemeBackground: View {
             } else if let videoURL = ThemeMedia.videoURL(for: theme.id, lowPower: saver) {
                 VideoBackground(url: videoURL, parallax: engine.state.settings.parallaxOn)
                 scrim
-            } else if let art = ThemeMedia.image(for: theme.id) {
-                GeometryReader { geo in
-                    Image(nsImage: art)
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: geo.size.width, height: geo.size.height)
-                        .clipped()
-                }
-                scrim
             } else {
-                LinearGradient(colors: theme.bg, startPoint: .top, endPoint: .bottom)
+                ProceduralBackground(theme: theme)
             }
 
             InteractiveFX(

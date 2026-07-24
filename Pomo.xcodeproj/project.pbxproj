@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		04CE1A7B2F3E8D0A1B6C49F0 /* ColorExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F2E83C5D1B09E4F6A38D21 /* ColorExtractor.swift */; };
+		1B2C3D4E5F6A7B8C9D0E1F00 /* ProceduralBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3B4C5D6E7F8091A2B3C4D0 /* ProceduralBackground.swift */; };
 		09AEE061F6CF0BF9D729AC47 /* FXLayers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D42E579ADA5458CE3F1966B /* FXLayers.swift */; };
 		12F3B03233C83DDE4E73F3B5 /* HabitTrackerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166D812EA8587999632BBB7F /* HabitTrackerView.swift */; };
 		185F7C85736744633160C751 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21170AD649A44BE646C24D9F /* Theme.swift */; };
@@ -60,6 +61,7 @@
 		0CABA81DCD16049E1088325D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		0D42E579ADA5458CE3F1966B /* FXLayers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FXLayers.swift; sourceTree = "<group>"; };
 		A7F2E83C5D1B09E4F6A38D21 /* ColorExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtractor.swift; sourceTree = "<group>"; };
+		2A3B4C5D6E7F8091A2B3C4D0 /* ProceduralBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProceduralBackground.swift; sourceTree = "<group>"; };
 		0EE45544DCD74D868E4310D8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		166D812EA8587999632BBB7F /* HabitTrackerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitTrackerView.swift; sourceTree = "<group>"; };
 		1E1EDB8F9DC2D4C8A4297B8E /* VideoBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoBackground.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 				6B18AFD638AFD61FB867CBB2 /* Pomo.entitlements */,
 				B5F64BA8EF606DFF35F60D2E /* PomoApp.swift */,
 				9C3762AC96C835E4CBD39035 /* PomoEngine.swift */,
+				2A3B4C5D6E7F8091A2B3C4D0 /* ProceduralBackground.swift */,
 				941CE377E11F904DDE7E5451 /* SceneArt.swift */,
 				A5D3E513BF101EAC6D5CF76C /* SettingsView.swift */,
 				2D89C80D8ADBC2A247EED4BD /* Spotify.swift */,
@@ -244,6 +247,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				04CE1A7B2F3E8D0A1B6C49F0 /* ColorExtractor.swift in Sources */,
+				1B2C3D4E5F6A7B8C9D0E1F00 /* ProceduralBackground.swift in Sources */,
 				587F7C324392E5B9A2EC1A31 /* ContentView.swift in Sources */,
 				EF4BF5AB0A720654806A7AAE /* DesktopMode.swift in Sources */,
 				09AEE061F6CF0BF9D729AC47 /* FXLayers.swift in Sources */,

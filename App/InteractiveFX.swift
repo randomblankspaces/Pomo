@@ -296,11 +296,14 @@ final class FXEngine {
                 p.append(d)
             }
         case .bokeh:
-            for _ in 0..<n(18) {
+            for _ in 0..<n(22) {
                 var d = P()
-                d.x = r(0, w); d.y = r(0, h); d.z = r(0.3, 1)
+                d.x = r(0, w); d.y = r(0, h); d.z = r(0.05, 1)
                 d.vx = r(-3, 3); d.vy = r(-2, 2)
-                d.freq = r(0.2, 0.6); d.phase = r(0, 6.28); d.size = (8 + 12 * d.z) * sizeScale
+                d.freq = r(0.2, 0.6); d.phase = r(0, 6.28)
+                // Quadratic depth curve: mostly small tight lights with a few
+                // large soft orbs, instead of one uniform disc size.
+                d.size = (3 + 20 * d.z * d.z) * sizeScale
                 d.seed = r(0, 1)
                 p.append(d)
             }

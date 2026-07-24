@@ -11,6 +11,18 @@ extension ParticleStyle {
         [.pond, .petals, .leaves, .neonRain, .stars, .snow, .fireflies, .dust, .gravity, .pixel,
          .embers, .bokeh, .sparkle, .confetti, .smoke, .lanterns, .feathers, .fog, .geometric,
          .comet, .ripples, .lightning, .aurora]
+
+    /// Light-emitting styles composite additively so they read as glow against
+    /// the backdrop instead of flat stickers with muddy alpha edges.
+    var emitsLight: Bool {
+        switch self {
+        case .bokeh, .embers, .fireflies, .sparkle, .lanterns, .stars,
+             .comet, .aurora, .lightning, .neonRain, .gravity:
+            return true
+        default:
+            return false
+        }
+    }
 }
 
 struct FXLayerFX: NSViewRepresentable {
@@ -158,8 +170,10 @@ final class FXLayerView: NSView {
         let ps = engine.particles
         if particleLayers[i].count != ps.count {
             particleLayers[i].forEach { $0.removeFromSuperlayer() }
+            let additive = styles[i].emitsLight
             particleLayers[i] = ps.map { p in
                 let l = makeParticleLayer(styles[i], p)
+                if additive { l.compositingFilter = "plusL" }
                 layer?.addSublayer(l)
                 return l
             }
@@ -225,9 +239,13 @@ final class FXLayerView: NSView {
                 style == .stars ? (p.seed > 0.86 ? theme.ringB : .white)
                 : style == .dust ? theme.ringB
                 : (p.seed > 0.5 ? theme.ringA : theme.ringB)
-            let img = style == .fireflies
-                ? FXImages.glow(NSColor(color), core: p.size)
-                : FXImages.dot(NSColor(color), radius: p.size)
+            let img: CGImage = {
+                switch style {
+                case .fireflies: return FXImages.firefly(NSColor(color), size: p.size)
+                case .stars:     return FXImages.star(NSColor(color), size: p.size)
+                default:         return FXImages.dustMote(NSColor(color), size: p.size)
+                }
+            }()
             l.contents = img
             l.bounds = CGRect(x: 0, y: 0, width: img.width / 2, height: img.height / 2)
             return l
@@ -243,27 +261,29 @@ final class FXLayerView: NSView {
             return l
         case .snow:
             let l = CALayer()
-            let img = FXImages.dot(.white, radius: p.size)
+            let img = FXImages.snowflake(size: p.size)
             l.contents = img
             l.bounds = CGRect(x: 0, y: 0, width: img.width / 2, height: img.height / 2)
             return l
         case .embers:
             let l = CALayer()
             let color = p.seed > 0.5 ? theme.ringA : theme.ringB
-            let img = FXImages.glow(NSColor(color), core: p.size)
+            let img = FXImages.ember(NSColor(color), size: p.size)
             l.contents = img
             l.bounds = CGRect(x: 0, y: 0, width: img.width / 2, height: img.height / 2)
+            l.anchorPoint = CGPoint(x: 0.5, y: 0.8)
             return l
         case .bokeh:
             let l = CALayer()
             let color = p.seed > 0.6 ? theme.ringA : (p.seed > 0.3 ? theme.ringB : theme.accent)
-            let img = FXImages.glow(NSColor(color).withAlphaComponent(0.35), core: p.size)
+            let img = FXImages.bokeh(NSColor(color), size: p.size)
             l.contents = img
             l.bounds = CGRect(x: 0, y: 0, width: img.width / 2, height: img.height / 2)
             return l
         case .sparkle:
             let l = CALayer()
-            let img = FXImages.dot(.white, radius: p.size)
+            let color: Color = p.seed > 0.5 ? theme.ringA : .white
+            let img = FXImages.sparkleFlare(NSColor(color), size: p.size)
             l.contents = img
             l.bounds = CGRect(x: 0, y: 0, width: img.width / 2, height: img.height / 2)
             return l
@@ -275,14 +295,14 @@ final class FXLayerView: NSView {
             return l
         case .smoke:
             let l = CALayer()
-            let img = FXImages.glow(NSColor(theme.ringB).withAlphaComponent(0.12), core: p.size)
+            let img = FXImages.smokeWisp(NSColor(theme.ringB), size: p.size)
             l.contents = img
             l.bounds = CGRect(x: 0, y: 0, width: img.width / 2, height: img.height / 2)
             return l
         case .lanterns:
             let l = CALayer()
             let color = p.seed > 0.5 ? theme.ringA : theme.ringB
-            let img = FXImages.glow(NSColor(color), core: p.size)
+            let img = FXImages.lantern(NSColor(color), size: p.size)
             l.contents = img
             l.bounds = CGRect(x: 0, y: 0, width: img.width / 2, height: img.height / 2)
             return l
@@ -306,7 +326,7 @@ final class FXLayerView: NSView {
             return shape
         case .fog:
             let l = CALayer()
-            let img = FXImages.glow(NSColor(theme.ringB).withAlphaComponent(0.06), core: p.size)
+            let img = FXImages.fogWisp(NSColor(theme.ringB), size: p.size)
             l.contents = img
             l.bounds = CGRect(x: 0, y: 0, width: img.width / 2, height: img.height / 2)
             return l
@@ -328,11 +348,11 @@ final class FXLayerView: NSView {
         case .comet:
             let l = CALayer()
             let color: Color = p.seed > 0.5 ? theme.ringA : theme.ringB
-            let img = FXImages.streak(NSColor(color), length: 30 + 40 * p.z, width: p.size,
-                                      gradient: true, alpha: 0.7)
+            let length = 90 + 140 * p.z
+            let img = FXImages.cometHead(NSColor(color), length: length, headSize: max(3, p.size * 1.6))
             l.contents = img
             l.bounds = CGRect(x: 0, y: 0, width: img.width / 2, height: img.height / 2)
-            l.anchorPoint = CGPoint(x: 0.5, y: 0)
+            l.anchorPoint = CGPoint(x: 0.5, y: 0)  // head at 0 so rotation swings the tail
             return l
         case .ripples, .lightning:
             return CALayer()
@@ -447,9 +467,12 @@ final class FXLayerView: NSView {
                 l.opacity = Float(flicker * (0.3 + 0.5 * p.z))
             case .bokeh:
                 l.position = CGPoint(x: p.x, y: h - p.y)
-                let pulse = 0.6 + 0.4 * sin(p.phase * 0.8)
-                l.opacity = Float(pulse * 0.35)
-                let s = 0.9 + 0.2 * sin(p.phase * 0.5)
+                let pulse = 0.78 + 0.22 * sin(p.phase * 0.8)
+                // Near/large discs are more defocused, so they read dimmer than
+                // the tight far ones — that contrast is what sells the depth.
+                let depthFade = 1.0 - 0.45 * p.z
+                l.opacity = Float(pulse * depthFade * 0.95)
+                let s = 0.95 + 0.1 * sin(p.phase * 0.5)
                 l.transform = CATransform3DMakeScale(s, s, 1)
             case .sparkle:
                 l.position = CGPoint(x: p.x, y: h - p.y)
@@ -810,6 +833,430 @@ enum FXImages {
             ctx.setStrokeColor((inner.usingColorSpace(.deviceRGB) ?? inner).withAlphaComponent(0.25).cgColor)
             ctx.setLineWidth(1.2)
             ctx.strokeEllipse(in: CGRect(x: 10, y: 10, width: 40, height: 40))
+        }
+    }
+
+    // MARK: - Richer particle textures
+
+    /// Defocused lens light: a clean round disc with a gently brighter rim and
+    /// a wide falloff halo. Composited additively so it reads as light, not paint.
+    static func bokeh(_ color: NSColor, size: Double) -> CGImage {
+        let c = color.usingColorSpace(.deviceRGB) ?? color
+        let key = "bk\(Int(size * 4))-\(c.description)"
+        let R = size * 3.2
+        return render(key, R * 2, R * 2) { ctx in
+            let space = CGColorSpaceCreateDeviceRGB()
+            let center = CGPoint(x: R, y: R)
+
+            // Wide, very soft falloff so edges never band
+            let halo = CGGradient(colorsSpace: space,
+                                  colors: [c.withAlphaComponent(0.22).cgColor,
+                                           c.withAlphaComponent(0.06).cgColor,
+                                           c.withAlphaComponent(0).cgColor] as CFArray,
+                                  locations: [0, 0.45, 1])!
+            ctx.drawRadialGradient(halo,
+                                   startCenter: center, startRadius: 0,
+                                   endCenter: center, endRadius: R,
+                                   options: [])
+
+            // The defocused disc — dim interior with the energy concentrated in
+            // a bright rim, feathered at the very edge. This ring-weighted
+            // profile is what makes bokeh read as a lens circle of light
+            // rather than a solid painted dot.
+            let discR = size * 1.5
+            let disc = CGGradient(colorsSpace: space,
+                                  colors: [c.withAlphaComponent(0.10).cgColor,
+                                           c.withAlphaComponent(0.13).cgColor,
+                                           c.withAlphaComponent(0.38).cgColor,
+                                           c.withAlphaComponent(0.16).cgColor,
+                                           c.withAlphaComponent(0).cgColor] as CFArray,
+                                  locations: [0, 0.66, 0.90, 0.98, 1])!
+            ctx.drawRadialGradient(disc,
+                                   startCenter: center, startRadius: 0,
+                                   endCenter: center, endRadius: discR,
+                                   options: [])
+        }
+    }
+
+    /// Bioluminescent firefly: warm-yellow core with green-tinted halo and
+    /// a soft outer bloom. Reads as a live insect, not a flat glow.
+    static func firefly(_ core: NSColor, size: Double) -> CGImage {
+        let key = "ff\(Int(size * 4))-\(core.description)"
+        let R = size * 4
+        return render(key, R * 2, R * 2) { ctx in
+            let space = CGColorSpaceCreateDeviceRGB()
+            let cool = NSColor(calibratedRed: 0.6, green: 1.0, blue: 0.55, alpha: 1)
+            let outerHalo = CGGradient(colorsSpace: space,
+                                       colors: [cool.withAlphaComponent(0.28).cgColor,
+                                                cool.withAlphaComponent(0.06).cgColor,
+                                                cool.withAlphaComponent(0).cgColor] as CFArray,
+                                       locations: [0, 0.55, 1])!
+            ctx.drawRadialGradient(outerHalo,
+                                   startCenter: CGPoint(x: R, y: R), startRadius: 0,
+                                   endCenter: CGPoint(x: R, y: R), endRadius: R,
+                                   options: [])
+            let warm = core.usingColorSpace(.deviceRGB) ?? core
+            let bloom = CGGradient(colorsSpace: space,
+                                   colors: [NSColor.white.withAlphaComponent(0.95).cgColor,
+                                            warm.withAlphaComponent(0.85).cgColor,
+                                            warm.withAlphaComponent(0.25).cgColor,
+                                            warm.withAlphaComponent(0).cgColor] as CFArray,
+                                   locations: [0, 0.3, 0.75, 1])!
+            let bR = size * 1.6
+            ctx.drawRadialGradient(bloom,
+                                   startCenter: CGPoint(x: R, y: R), startRadius: 0,
+                                   endCenter: CGPoint(x: R, y: R), endRadius: bR,
+                                   options: [])
+        }
+    }
+
+    /// Rising ember: hot white core, orange body, soft downward trail —
+    /// looks like a live coal ejecting from a fire.
+    static func ember(_ color: NSColor, size: Double) -> CGImage {
+        let c = color.usingColorSpace(.deviceRGB) ?? color
+        let key = "em\(Int(size * 4))-\(c.description)"
+        let W = size * 3
+        let H = size * 5
+        return render(key, W, H) { ctx in
+            let space = CGColorSpaceCreateDeviceRGB()
+            // Downward-tapering trail behind the head
+            ctx.saveGState()
+            let trailRect = CGRect(x: W / 2 - size * 0.7, y: 0, width: size * 1.4, height: H * 0.75)
+            ctx.clip(to: trailRect)
+            let trail = CGGradient(colorsSpace: space,
+                                   colors: [c.withAlphaComponent(0).cgColor,
+                                            c.withAlphaComponent(0.5).cgColor] as CFArray,
+                                   locations: [0, 1])!
+            ctx.drawLinearGradient(trail,
+                                   start: CGPoint(x: W / 2, y: 0),
+                                   end: CGPoint(x: W / 2, y: H * 0.75),
+                                   options: [])
+            ctx.restoreGState()
+            // Halo
+            let halo = CGGradient(colorsSpace: space,
+                                  colors: [c.withAlphaComponent(0.55).cgColor,
+                                           c.withAlphaComponent(0.1).cgColor,
+                                           c.withAlphaComponent(0).cgColor] as CFArray,
+                                  locations: [0, 0.6, 1])!
+            ctx.drawRadialGradient(halo,
+                                   startCenter: CGPoint(x: W / 2, y: H * 0.8), startRadius: 0,
+                                   endCenter: CGPoint(x: W / 2, y: H * 0.8), endRadius: size * 2.4,
+                                   options: [])
+            // Hot core
+            let hot = CGGradient(colorsSpace: space,
+                                 colors: [NSColor.white.cgColor,
+                                          c.withAlphaComponent(0.85).cgColor,
+                                          c.withAlphaComponent(0).cgColor] as CFArray,
+                                 locations: [0, 0.35, 1])!
+            ctx.drawRadialGradient(hot,
+                                   startCenter: CGPoint(x: W / 2, y: H * 0.8), startRadius: 0,
+                                   endCenter: CGPoint(x: W / 2, y: H * 0.8), endRadius: size,
+                                   options: [])
+        }
+    }
+
+    /// Sky lantern: a warm paper-glow envelope, brightest at the flame near its
+    /// base and falling off toward the crown. Fully emissive — no dark trim,
+    /// which additive compositing would drop anyway.
+    static func lantern(_ color: NSColor, size: Double) -> CGImage {
+        let c = color.usingColorSpace(.deviceRGB) ?? color
+        let key = "ln\(Int(size * 4))-\(c.description)"
+        let W = size * 5
+        let H = size * 6
+        return render(key, W, H) { ctx in
+            let space = CGColorSpaceCreateDeviceRGB()
+            let cx = W / 2
+            let flame = CGPoint(x: cx, y: H * 0.34)
+
+            // Ambient bloom around the whole lantern
+            let bloom = CGGradient(colorsSpace: space,
+                                   colors: [c.withAlphaComponent(0.30).cgColor,
+                                            c.withAlphaComponent(0.07).cgColor,
+                                            c.withAlphaComponent(0).cgColor] as CFArray,
+                                   locations: [0, 0.5, 1])!
+            ctx.drawRadialGradient(bloom,
+                                   startCenter: flame, startRadius: 0,
+                                   endCenter: flame, endRadius: W * 0.5,
+                                   options: [])
+
+            // Paper envelope: rounded, slightly tapered toward the crown
+            let body = CGMutablePath()
+            let bw = size * 1.15
+            let top = H * 0.60
+            let bottom = H * 0.16
+            body.move(to: CGPoint(x: cx - bw * 0.72, y: bottom))
+            body.addQuadCurve(to: CGPoint(x: cx - bw, y: (top + bottom) / 2),
+                              control: CGPoint(x: cx - bw * 1.06, y: bottom + (top - bottom) * 0.22))
+            body.addQuadCurve(to: CGPoint(x: cx - bw * 0.55, y: top),
+                              control: CGPoint(x: cx - bw * 0.98, y: top - (top - bottom) * 0.16))
+            body.addLine(to: CGPoint(x: cx + bw * 0.55, y: top))
+            body.addQuadCurve(to: CGPoint(x: cx + bw, y: (top + bottom) / 2),
+                              control: CGPoint(x: cx + bw * 0.98, y: top - (top - bottom) * 0.16))
+            body.addQuadCurve(to: CGPoint(x: cx + bw * 0.72, y: bottom),
+                              control: CGPoint(x: cx + bw * 1.06, y: bottom + (top - bottom) * 0.22))
+            body.closeSubpath()
+
+            ctx.saveGState()
+            ctx.addPath(body)
+            ctx.clip()
+            // Lit from the flame at the base, so the underside is hottest
+            let paper = CGGradient(colorsSpace: space,
+                                   colors: [NSColor.white.withAlphaComponent(0.92).cgColor,
+                                            c.withAlphaComponent(0.85).cgColor,
+                                            c.withAlphaComponent(0.45).cgColor,
+                                            c.withAlphaComponent(0.22).cgColor] as CFArray,
+                                   locations: [0, 0.34, 0.72, 1])!
+            ctx.drawRadialGradient(paper,
+                                   startCenter: flame, startRadius: 0,
+                                   endCenter: flame, endRadius: size * 2.6,
+                                   options: [])
+            ctx.restoreGState()
+
+            // The flame itself — small hot point at the mouth
+            let fire = CGGradient(colorsSpace: space,
+                                  colors: [NSColor.white.cgColor,
+                                           c.withAlphaComponent(0.9).cgColor,
+                                           c.withAlphaComponent(0).cgColor] as CFArray,
+                                  locations: [0, 0.4, 1])!
+            ctx.drawRadialGradient(fire,
+                                   startCenter: CGPoint(x: cx, y: H * 0.22), startRadius: 0,
+                                   endCenter: CGPoint(x: cx, y: H * 0.22), endRadius: size * 0.7,
+                                   options: [])
+        }
+    }
+
+    /// 4-point cross-flare sparkle with bright center — reads as a twinkling star.
+    static func sparkleFlare(_ color: NSColor, size: Double) -> CGImage {
+        let c = color.usingColorSpace(.deviceRGB) ?? color
+        let key = "sf\(Int(size * 4))-\(c.description)"
+        let R = size * 3.5
+        return render(key, R * 2, R * 2) { ctx in
+            let space = CGColorSpaceCreateDeviceRGB()
+            // Cross flare
+            let vFlare = CGGradient(colorsSpace: space,
+                                    colors: [c.withAlphaComponent(0).cgColor,
+                                             c.withAlphaComponent(0.9).cgColor,
+                                             c.withAlphaComponent(0).cgColor] as CFArray,
+                                    locations: [0, 0.5, 1])!
+            ctx.saveGState()
+            ctx.clip(to: CGRect(x: R - size * 0.14, y: 0, width: size * 0.28, height: R * 2))
+            ctx.drawLinearGradient(vFlare,
+                                   start: CGPoint(x: R, y: 0),
+                                   end: CGPoint(x: R, y: R * 2),
+                                   options: [])
+            ctx.restoreGState()
+            ctx.saveGState()
+            ctx.clip(to: CGRect(x: 0, y: R - size * 0.14, width: R * 2, height: size * 0.28))
+            ctx.drawLinearGradient(vFlare,
+                                   start: CGPoint(x: 0, y: R),
+                                   end: CGPoint(x: R * 2, y: R),
+                                   options: [])
+            ctx.restoreGState()
+            // Bright center bloom
+            let bloom = CGGradient(colorsSpace: space,
+                                   colors: [NSColor.white.cgColor,
+                                            c.withAlphaComponent(0.9).cgColor,
+                                            c.withAlphaComponent(0).cgColor] as CFArray,
+                                   locations: [0, 0.35, 1])!
+            ctx.drawRadialGradient(bloom,
+                                   startCenter: CGPoint(x: R, y: R), startRadius: 0,
+                                   endCenter: CGPoint(x: R, y: R), endRadius: size,
+                                   options: [])
+        }
+    }
+
+    /// Six-branch snowflake shape (baked once per size) — no more identical white circles.
+    static func snowflake(size: Double) -> CGImage {
+        let key = "sn\(Int(size * 4))"
+        let R = size * 2
+        return render(key, R * 2, R * 2) { ctx in
+            let cx = R, cy = R
+            ctx.setStrokeColor(NSColor.white.withAlphaComponent(0.92).cgColor)
+            ctx.setLineWidth(max(0.6, size * 0.18))
+            ctx.setLineCap(.round)
+            for k in 0..<6 {
+                let a = Double(k) / 6.0 * .pi * 2
+                let ex = cx + cos(a) * size
+                let ey = cy + sin(a) * size
+                ctx.move(to: CGPoint(x: cx, y: cy))
+                ctx.addLine(to: CGPoint(x: ex, y: ey))
+                // Two little side spurs
+                for (t, spurLen) in [(0.55, size * 0.35), (0.8, size * 0.22)] {
+                    let bx = cx + cos(a) * size * t
+                    let by = cy + sin(a) * size * t
+                    let leftA = a + .pi / 3
+                    let rightA = a - .pi / 3
+                    ctx.move(to: CGPoint(x: bx, y: by))
+                    ctx.addLine(to: CGPoint(x: bx + cos(leftA) * spurLen, y: by + sin(leftA) * spurLen))
+                    ctx.move(to: CGPoint(x: bx, y: by))
+                    ctx.addLine(to: CGPoint(x: bx + cos(rightA) * spurLen, y: by + sin(rightA) * spurLen))
+                }
+            }
+            ctx.strokePath()
+            // Center dot
+            ctx.setFillColor(NSColor.white.cgColor)
+            ctx.fillEllipse(in: CGRect(x: cx - 0.9, y: cy - 0.9, width: 1.8, height: 1.8))
+        }
+    }
+
+    /// Twinkling star with 4-point flare + soft round bloom, more elegant than a dot.
+    static func star(_ color: NSColor, size: Double) -> CGImage {
+        let c = color.usingColorSpace(.deviceRGB) ?? color
+        let key = "st\(Int(size * 4))-\(c.description)"
+        let R = max(2, size * 4)
+        return render(key, R * 2, R * 2) { ctx in
+            let space = CGColorSpaceCreateDeviceRGB()
+            // Diamond flare (short vertical + horizontal spikes)
+            let flare = CGGradient(colorsSpace: space,
+                                   colors: [c.withAlphaComponent(0).cgColor,
+                                            c.withAlphaComponent(0.75).cgColor,
+                                            c.withAlphaComponent(0).cgColor] as CFArray,
+                                   locations: [0, 0.5, 1])!
+            let flareLen = R * 0.9
+            ctx.saveGState()
+            ctx.clip(to: CGRect(x: R - 0.5, y: R - flareLen, width: 1, height: flareLen * 2))
+            ctx.drawLinearGradient(flare,
+                                   start: CGPoint(x: R, y: R - flareLen),
+                                   end: CGPoint(x: R, y: R + flareLen),
+                                   options: [])
+            ctx.restoreGState()
+            ctx.saveGState()
+            ctx.clip(to: CGRect(x: R - flareLen, y: R - 0.5, width: flareLen * 2, height: 1))
+            ctx.drawLinearGradient(flare,
+                                   start: CGPoint(x: R - flareLen, y: R),
+                                   end: CGPoint(x: R + flareLen, y: R),
+                                   options: [])
+            ctx.restoreGState()
+            // Bright core
+            let core = CGGradient(colorsSpace: space,
+                                  colors: [NSColor.white.cgColor,
+                                           c.withAlphaComponent(0.75).cgColor,
+                                           c.withAlphaComponent(0).cgColor] as CFArray,
+                                  locations: [0, 0.4, 1])!
+            ctx.drawRadialGradient(core,
+                                   startCenter: CGPoint(x: R, y: R), startRadius: 0,
+                                   endCenter: CGPoint(x: R, y: R), endRadius: size,
+                                   options: [])
+        }
+    }
+
+    /// Wispy elongated fog patch — soft ellipse feathered horizontally.
+    static func fogWisp(_ color: NSColor, size: Double) -> CGImage {
+        let c = color.usingColorSpace(.deviceRGB) ?? color
+        let key = "fw\(Int(size * 4))-\(c.description)"
+        let W = size * 6
+        let H = size * 2.4
+        return render(key, W, H) { ctx in
+            let space = CGColorSpaceCreateDeviceRGB()
+            let g = CGGradient(colorsSpace: space,
+                               colors: [c.withAlphaComponent(0).cgColor,
+                                        c.withAlphaComponent(0.10).cgColor,
+                                        c.withAlphaComponent(0.18).cgColor,
+                                        c.withAlphaComponent(0.10).cgColor,
+                                        c.withAlphaComponent(0).cgColor] as CFArray,
+                               locations: [0, 0.25, 0.5, 0.75, 1])!
+            ctx.saveGState()
+            ctx.addEllipse(in: CGRect(x: 0, y: 0, width: W, height: H))
+            ctx.clip()
+            ctx.drawLinearGradient(g,
+                                   start: CGPoint(x: 0, y: H / 2),
+                                   end: CGPoint(x: W, y: H / 2),
+                                   options: [])
+            ctx.restoreGState()
+        }
+    }
+
+    /// Wispy smoke curl — soft asymmetric ellipse with warm gradient hint.
+    static func smokeWisp(_ color: NSColor, size: Double) -> CGImage {
+        let c = color.usingColorSpace(.deviceRGB) ?? color
+        let key = "sw\(Int(size * 4))-\(c.description)"
+        let W = size * 3.5
+        let H = size * 4.5
+        return render(key, W, H) { ctx in
+            let space = CGColorSpaceCreateDeviceRGB()
+            let g = CGGradient(colorsSpace: space,
+                               colors: [c.withAlphaComponent(0.22).cgColor,
+                                        c.withAlphaComponent(0.08).cgColor,
+                                        c.withAlphaComponent(0).cgColor] as CFArray,
+                               locations: [0, 0.55, 1])!
+            // Two overlapping blobs for irregularity
+            ctx.drawRadialGradient(g,
+                                   startCenter: CGPoint(x: W * 0.45, y: H * 0.55), startRadius: 0,
+                                   endCenter: CGPoint(x: W * 0.45, y: H * 0.55), endRadius: W * 0.5,
+                                   options: [])
+            ctx.drawRadialGradient(g,
+                                   startCenter: CGPoint(x: W * 0.6, y: H * 0.35), startRadius: 0,
+                                   endCenter: CGPoint(x: W * 0.6, y: H * 0.35), endRadius: W * 0.42,
+                                   options: [])
+        }
+    }
+
+    /// A real comet: bright head + curved tail with hot-white core fading to color.
+    static func cometHead(_ color: NSColor, length: Double, headSize: Double) -> CGImage {
+        let c = color.usingColorSpace(.deviceRGB) ?? color
+        let key = "cm\(Int(length))-\(Int(headSize * 4))-\(c.description)"
+        let W = max(6, headSize * 3.2)
+        let H = length
+        return render(key, W, H) { ctx in
+            let space = CGColorSpaceCreateDeviceRGB()
+            let cx = W / 2
+            let hx = H
+            // Tapered tail as a triangular clip
+            ctx.saveGState()
+            let tail = CGMutablePath()
+            tail.move(to: CGPoint(x: cx - headSize * 1.2, y: H))
+            tail.addQuadCurve(to: CGPoint(x: cx, y: 0),
+                              control: CGPoint(x: cx - headSize * 0.3, y: H * 0.35))
+            tail.addQuadCurve(to: CGPoint(x: cx + headSize * 1.2, y: H),
+                              control: CGPoint(x: cx + headSize * 0.3, y: H * 0.35))
+            tail.closeSubpath()
+            ctx.addPath(tail)
+            ctx.clip()
+            let tailGrad = CGGradient(colorsSpace: space,
+                                      colors: [c.withAlphaComponent(0).cgColor,
+                                               c.withAlphaComponent(0.15).cgColor,
+                                               c.withAlphaComponent(0.55).cgColor,
+                                               NSColor.white.withAlphaComponent(0.9).cgColor] as CFArray,
+                                      locations: [0, 0.4, 0.85, 1])!
+            ctx.drawLinearGradient(tailGrad,
+                                   start: CGPoint(x: cx, y: H),
+                                   end: CGPoint(x: cx, y: 0),
+                                   options: [])
+            ctx.restoreGState()
+            // Bright head bloom (drawn on top, at bottom of the image which is the leading tip)
+            let bloom = CGGradient(colorsSpace: space,
+                                   colors: [NSColor.white.cgColor,
+                                            c.withAlphaComponent(0.9).cgColor,
+                                            c.withAlphaComponent(0).cgColor] as CFArray,
+                                   locations: [0, 0.35, 1])!
+            _ = hx  // unused
+            ctx.drawRadialGradient(bloom,
+                                   startCenter: CGPoint(x: cx, y: 0), startRadius: 0,
+                                   endCenter: CGPoint(x: cx, y: 0), endRadius: headSize * 1.4,
+                                   options: [])
+        }
+    }
+
+    /// Small asymmetric dust mote — soft ellipse with subtle rimlight.
+    static func dustMote(_ color: NSColor, size: Double) -> CGImage {
+        let c = color.usingColorSpace(.deviceRGB) ?? color
+        let key = "dm\(Int(size * 4))-\(c.description)"
+        let W = size * 3.2
+        let H = size * 2.2
+        return render(key, W, H) { ctx in
+            let space = CGColorSpaceCreateDeviceRGB()
+            let g = CGGradient(colorsSpace: space,
+                               colors: [c.withAlphaComponent(0.6).cgColor,
+                                        c.withAlphaComponent(0.15).cgColor,
+                                        c.withAlphaComponent(0).cgColor] as CFArray,
+                               locations: [0, 0.55, 1])!
+            ctx.drawRadialGradient(g,
+                                   startCenter: CGPoint(x: W * 0.5, y: H * 0.5), startRadius: 0,
+                                   endCenter: CGPoint(x: W * 0.5, y: H * 0.5), endRadius: W * 0.5,
+                                   options: [])
+            // Rimlight on top-right
+            ctx.setFillColor(NSColor.white.withAlphaComponent(0.4).cgColor)
+            ctx.fillEllipse(in: CGRect(x: W * 0.6, y: H * 0.32, width: size * 0.35, height: size * 0.35))
         }
     }
 }
