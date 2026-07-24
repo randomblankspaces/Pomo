@@ -8,6 +8,8 @@ struct ContentView: View {
     @EnvironmentObject var visibility: VisibilityMonitor
     @EnvironmentObject var spotify: SpotifyController
     @State private var showSettings = false
+    @State private var showAddTheme = false
+    @StateObject private var themeStore = CustomThemeStore.shared
     @AppStorage("habitPanelsOn") private var showHabits = false
 
     var theme: Theme { engine.theme }
@@ -84,6 +86,37 @@ struct ContentView: View {
             SettingsView()
                 .environmentObject(engine)
         }
+        .sheet(isPresented: $showAddTheme) {
+            AddThemeSheet(theme: theme) { newID in
+                withAnimation(.easeInOut(duration: 0.6)) { engine.setTheme(newID) }
+            }
+        }
+        .overlay(alignment: .topLeading) {
+            if themeStore.isEmpty { firstRunPointer }
+        }
+    }
+
+    /// Nothing imported yet — point at the theme menu in the header.
+    private var firstRunPointer: some View {
+        HStack(alignment: .top, spacing: 8) {
+            FirstRunArrow()
+                .stroke(.red, style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
+                .frame(width: 72, height: 58)
+
+            VStack(alignment: .leading, spacing: 3) {
+                Text("Start here")
+                    .font(.system(size: 15, weight: .bold, design: theme.fontDesign))
+                    .foregroundStyle(.red)
+                Text("Add a theme from your own video")
+                    .font(.system(size: 11, design: theme.fontDesign))
+                    .foregroundStyle(theme.textSecondary)
+            }
+            .padding(.top, 34)
+        }
+        .padding(.leading, 26)
+        .padding(.top, 40)
+        .allowsHitTesting(false)
+        .transition(.opacity)
     }
 
     // MARK: Header — theme menu + settings
@@ -91,19 +124,27 @@ struct ContentView: View {
     private var header: some View {
         HStack {
             Menu {
-                ForEach(Themes.all) { t in
-                    Button {
-                        engine.setTheme(t.id)
-                    } label: {
-                        HStack {
-                            Text("\(t.emoji) \(t.name)")
-                            if t.id == theme.id { Image(systemName: "checkmark") }
-                        }
-                    }
+                Button {
+                    showAddTheme = true
+                } label: {
+                    Label("Add Theme…", systemImage: "plus")
                 }
                 if !Themes.custom.isEmpty {
                     Divider()
                     ForEach(Themes.custom) { t in
+                        Button {
+                            engine.setTheme(t.id)
+                        } label: {
+                            HStack {
+                                Text("\(t.emoji) \(t.name)")
+                                if t.id == theme.id { Image(systemName: "checkmark") }
+                            }
+                        }
+                    }
+                }
+                Divider()
+                Menu("Built-in Presets") {
+                    ForEach(Themes.all) { t in
                         Button {
                             engine.setTheme(t.id)
                         } label: {
@@ -344,5 +385,25 @@ struct TimerRing: View {
             .scaleEffect(breathe)
             .aspectRatio(1, contentMode: .fit)
         }
+    }
+}
+
+/// Hand-drawn-feeling arrow curving up toward the theme menu in the header.
+private struct FirstRunArrow: Shape {
+    func path(in rect: CGRect) -> Path {
+        var p = Path()
+        let tip = CGPoint(x: rect.minX + rect.width * 0.10, y: rect.minY)
+        let tail = CGPoint(x: rect.maxX, y: rect.maxY)
+        p.move(to: tail)
+        p.addCurve(
+            to: tip,
+            control1: CGPoint(x: rect.midX + rect.width * 0.28, y: rect.maxY),
+            control2: CGPoint(x: rect.minX + rect.width * 0.02, y: rect.midY)
+        )
+        // Arrowhead
+        p.move(to: CGPoint(x: tip.x - rect.width * 0.02, y: tip.y + rect.height * 0.26))
+        p.addLine(to: tip)
+        p.addLine(to: CGPoint(x: tip.x + rect.width * 0.30, y: tip.y + rect.height * 0.12))
+        return p
     }
 }

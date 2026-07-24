@@ -44,24 +44,45 @@ enum ColorExtractor {
         )
     }
 
+    /// Redraws the frame into a context whose pixel layout we control, then
+    /// reads every cell. Poking the source image's bytes directly is not safe:
+    /// AVAssetImageGenerator hands back little-endian BGRA, so a fixed R,G,B
+    /// byte order silently swaps red and blue. Scaling to exactly rows×cols
+    /// also makes each sample an area average rather than one noisy pixel.
     private static func sampleGrid(_ cg: CGImage, rows: Int, cols: Int) -> [NSColor] {
-        let w = cg.width, h = cg.height
-        guard w > 0, h > 0,
-              let data = cg.dataProvider?.data,
-              let ptr = CFDataGetBytePtr(data) else { return [.gray] }
-        let bpp = cg.bitsPerPixel / 8
-        let bpr = cg.bytesPerRow
+        guard cg.width > 0, cg.height > 0, rows > 0, cols > 0 else { return [.gray] }
+
+        let bytesPerRow = cols * 4
+        var buffer = [UInt8](repeating: 0, count: bytesPerRow * rows)
+
+        let ok: Bool = buffer.withUnsafeMutableBytes { raw -> Bool in
+            guard let ctx = CGContext(
+                data: raw.baseAddress,
+                width: cols, height: rows,
+                bitsPerComponent: 8, bytesPerRow: bytesPerRow,
+                space: CGColorSpaceCreateDeviceRGB(),
+                bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
+            ) else { return false }
+            ctx.interpolationQuality = .medium
+            ctx.draw(cg, in: CGRect(x: 0, y: 0, width: cols, height: rows))
+            return true
+        }
+        guard ok else { return [.gray] }
+
         var colors: [NSColor] = []
+        colors.reserveCapacity(rows * cols)
         for r in 0..<rows {
             for c in 0..<cols {
-                let x = min(w - 1, (c * w) / max(1, cols - 1))
-                let y = min(h - 1, (r * h) / max(1, rows - 1))
-                let offset = y * bpr + x * bpp
-                guard offset + 2 < CFDataGetLength(data) else { continue }
-                let red = CGFloat(ptr[offset]) / 255
-                let green = CGFloat(ptr[offset + 1]) / 255
-                let blue = CGFloat(ptr[offset + 2]) / 255
-                colors.append(NSColor(red: red, green: green, blue: blue, alpha: 1))
+                let o = r * bytesPerRow + c * 4
+                let a = CGFloat(buffer[o + 3]) / 255
+                guard a > 0.01 else { continue }
+                // Undo premultiplication so dark-but-saturated pixels keep hue.
+                colors.append(NSColor(
+                    red: min(1, CGFloat(buffer[o]) / 255 / a),
+                    green: min(1, CGFloat(buffer[o + 1]) / 255 / a),
+                    blue: min(1, CGFloat(buffer[o + 2]) / 255 / a),
+                    alpha: 1
+                ))
             }
         }
         return colors.isEmpty ? [.gray] : colors
@@ -177,9 +198,13 @@ enum ThemeGenerator {
         let bgMid = darken(dom, by: 0.5)
         let bgLight = darken(dom, by: 0.3)
 
-        let ringA = brighten(sec, by: 0.3)
-        let ringB = brighten(ter, by: 0.5)
-        let accent = brighten(sec, by: 0.2)
+        // Ring and accent carry the theme's color. They sit on a dark backdrop
+        // and glow, so they're taken to near-full brightness with moderate
+        // saturation — the pastel end, matching how the hand-tuned themes read.
+        // Blending toward white instead would wash the hue out to grey.
+        let ringA = vivid(sec, saturation: 0.46, brightness: 0.98)
+        let ringB = vivid(ter, saturation: 0.24, brightness: 1.0)
+        let accent = vivid(sec, saturation: 0.58, brightness: 0.94)
 
         let isLight = profile.brightness > 0.6
         let textPrimary: Color = isLight ? Color(nsColor: darken(dom, by: 0.8)) : .white
@@ -211,6 +236,25 @@ enum ThemeGenerator {
             blue: c.blueComponent * (1 - amount),
             alpha: 1
         )
+    }
+
+    /// Restates a sampled color at a target saturation and brightness, keeping
+    /// only its hue. Footage averages toward dark and grey, so the sampled
+    /// levels themselves aren't worth preserving — the hue is the signal.
+    private static func vivid(_ color: NSColor,
+                              saturation: CGFloat,
+                              brightness: CGFloat) -> NSColor {
+        guard let c = color.usingColorSpace(.deviceRGB) else { return color }
+        var h: CGFloat = 0, s: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
+        c.getHue(&h, saturation: &s, brightness: &b, alpha: &a)
+
+        // A near-grey sample has an unreliable hue, so stay muted rather than
+        // inventing a vivid color the footage never had.
+        let target = s < 0.08 ? saturation * 0.4 : saturation
+        return NSColor(hue: h,
+                       saturation: min(1, target),
+                       brightness: min(1, brightness),
+                       alpha: 1)
     }
 
     private static func brighten(_ color: NSColor, by amount: CGFloat) -> NSColor {

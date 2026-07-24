@@ -4,6 +4,11 @@ struct SettingsView: View {
     @EnvironmentObject var engine: PomoEngine
     @EnvironmentObject var immersive: ImmersiveMode
     @Environment(\.dismiss) private var dismiss
+    @StateObject private var store = CustomThemeStore.shared
+
+    @State private var showAddTheme = false
+    @State private var editingThemeID: String?
+    @State private var showPresets = false
 
     var theme: Theme { engine.theme }
     var settings: PomoSettings { engine.state.settings }
@@ -26,12 +31,13 @@ struct SettingsView: View {
 
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading, spacing: 22) {
+                        themeSection
+                        presetSection
                         durationSection
                         effectsSection
                         particleSection
                         behaviorSection
                         immersiveSection
-                        themeSection
                     }
                     .padding(.bottom, 8)
                 }
@@ -39,6 +45,14 @@ struct SettingsView: View {
             .padding(22)
         }
         .frame(width: 420, height: 560)
+        .sheet(isPresented: $showAddTheme) {
+            AddThemeSheet(theme: theme) { newID in
+                withAnimation(.easeInOut(duration: 0.6)) { engine.setTheme(newID) }
+            }
+        }
+        .sheet(item: $editingThemeID) { id in
+            ThemeEditorSheet(themeID: id, uiTheme: theme)
+        }
     }
 
     // MARK: Durations
@@ -306,14 +320,78 @@ struct SettingsView: View {
     }
 
     private var themeSection: some View {
-        SettingsCard(title: "THEME", theme: theme) {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 110), spacing: 10)], spacing: 10) {
-                ForEach(Themes.allIncludingCustom) { t in
-                    ThemeSwatch(t: t, selected: t.id == theme.id) {
-                        withAnimation(.easeInOut(duration: 0.6)) { engine.setTheme(t.id) }
+        SettingsCard(title: "MY THEMES", theme: theme) {
+            if store.isEmpty {
+                emptyThemeState
+            } else {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 110), spacing: 10)], spacing: 10) {
+                    ForEach(store.themes) { ct in
+                        ThemeSwatch(t: ct.resolved, selected: ct.id == theme.id) {
+                            withAnimation(.easeInOut(duration: 0.6)) { engine.setTheme(ct.id) }
+                        }
+                        .contextMenu {
+                            Button("Edit…") { editingThemeID = ct.id }
+                            Button("Re-read Colors from Video") { store.reanalyze(id: ct.id) }
+                            Divider()
+                            Button("Delete", role: .destructive) { deleteTheme(ct.id) }
+                        }
+                    }
+                    AddThemeTile(theme: theme) { showAddTheme = true }
+                }
+
+                Text("Right-click a theme to edit its colors and particles.")
+                    .font(.system(size: 10, design: theme.fontDesign))
+                    .foregroundStyle(theme.textSecondary.opacity(0.8))
+                    .padding(.top, 2)
+            }
+        }
+    }
+
+    /// First-run state: nothing but the call to action.
+    private var emptyThemeState: some View {
+        VStack(spacing: 14) {
+            Text("No themes yet")
+                .font(.system(size: 13, weight: .semibold, design: theme.fontDesign))
+                .foregroundStyle(theme.textPrimary)
+
+            Text("Drop in a video and Pomo builds a theme from it — colors, ring, and particles picked to match.")
+                .font(.system(size: 11, design: theme.fontDesign))
+                .foregroundStyle(theme.textSecondary)
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+
+            AddThemeTile(theme: theme, prominent: true) { showAddTheme = true }
+                .frame(width: 150)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 8)
+    }
+
+    private var presetSection: some View {
+        SettingsCard(title: "BUILT-IN PRESETS", theme: theme) {
+            DisclosureGroup(isExpanded: $showPresets) {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 110), spacing: 10)], spacing: 10) {
+                    ForEach(Themes.all) { t in
+                        ThemeSwatch(t: t, selected: t.id == theme.id) {
+                            withAnimation(.easeInOut(duration: 0.6)) { engine.setTheme(t.id) }
+                        }
                     }
                 }
+                .padding(.top, 10)
+            } label: {
+                Text("\(Themes.all.count) themes without video")
+                    .font(.system(size: 11, design: theme.fontDesign))
+                    .foregroundStyle(theme.textSecondary)
             }
+            .tint(theme.accent)
+        }
+    }
+
+    private func deleteTheme(_ id: String) {
+        let wasSelected = theme.id == id
+        store.delete(id: id)
+        if wasSelected {
+            engine.setTheme(store.themes.first?.id ?? Themes.all[0].id)
         }
     }
 }

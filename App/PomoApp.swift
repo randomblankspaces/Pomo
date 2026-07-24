@@ -6,8 +6,11 @@ import AppKit
 final class PomoAppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         ThemeMedia.ensureDirectories()
-        DispatchQueue.global(qos: .utility).async {
-            ThemeMedia.generateCustomThemes()
+        // Stored themes carry the user's own edits, so publish those rather
+        // than re-deriving a palette from the footage on every launch.
+        MainActor.assumeIsolated {
+            CustomThemeStore.shared.publish()
+            CustomThemeStore.shared.adoptOrphanedVideos()
         }
         let wsc = NSWorkspace.shared.notificationCenter
         wsc.addObserver(forName: NSWorkspace.screensDidSleepNotification, object: nil, queue: .main) { _ in

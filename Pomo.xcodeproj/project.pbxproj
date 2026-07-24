@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		04CE1A7B2F3E8D0A1B6C49F0 /* ColorExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F2E83C5D1B09E4F6A38D21 /* ColorExtractor.swift */; };
+		AA01B1C1D1E1F10102030401 /* CustomThemeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB01B1C1D1E1F10102030401 /* CustomThemeStore.swift */; };
+		AA02B2C2D2E2F20202030402 /* AddThemeSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB02B2C2D2E2F20202030402 /* AddThemeSheet.swift */; };
+		AA03B3C3D3E3F30302030403 /* ThemeEditorSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB03B3C3D3E3F30302030403 /* ThemeEditorSheet.swift */; };
 		1B2C3D4E5F6A7B8C9D0E1F00 /* ProceduralBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3B4C5D6E7F8091A2B3C4D0 /* ProceduralBackground.swift */; };
 		09AEE061F6CF0BF9D729AC47 /* FXLayers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D42E579ADA5458CE3F1966B /* FXLayers.swift */; };
 		12F3B03233C83DDE4E73F3B5 /* HabitTrackerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166D812EA8587999632BBB7F /* HabitTrackerView.swift */; };
@@ -61,6 +64,9 @@
 		0CABA81DCD16049E1088325D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		0D42E579ADA5458CE3F1966B /* FXLayers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FXLayers.swift; sourceTree = "<group>"; };
 		A7F2E83C5D1B09E4F6A38D21 /* ColorExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtractor.swift; sourceTree = "<group>"; };
+		BB01B1C1D1E1F10102030401 /* CustomThemeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomThemeStore.swift; sourceTree = "<group>"; };
+		BB02B2C2D2E2F20202030402 /* AddThemeSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddThemeSheet.swift; sourceTree = "<group>"; };
+		BB03B3C3D3E3F30302030403 /* ThemeEditorSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeEditorSheet.swift; sourceTree = "<group>"; };
 		2A3B4C5D6E7F8091A2B3C4D0 /* ProceduralBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProceduralBackground.swift; sourceTree = "<group>"; };
 		0EE45544DCD74D868E4310D8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		166D812EA8587999632BBB7F /* HabitTrackerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitTrackerView.swift; sourceTree = "<group>"; };
@@ -131,6 +137,9 @@
 			children = (
 				8B9847A310B3F55B03007261 /* Assets.xcassets */,
 				A7F2E83C5D1B09E4F6A38D21 /* ColorExtractor.swift */,
+				BB01B1C1D1E1F10102030401 /* CustomThemeStore.swift */,
+				BB02B2C2D2E2F20202030402 /* AddThemeSheet.swift */,
+				BB03B3C3D3E3F30302030403 /* ThemeEditorSheet.swift */,
 				0EE45544DCD74D868E4310D8 /* ContentView.swift */,
 				7E2E68AC91C4178F762ABEAD /* DesktopMode.swift */,
 				0D42E579ADA5458CE3F1966B /* FXLayers.swift */,
@@ -247,6 +256,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				04CE1A7B2F3E8D0A1B6C49F0 /* ColorExtractor.swift in Sources */,
+				AA01B1C1D1E1F10102030401 /* CustomThemeStore.swift in Sources */,
+				AA02B2C2D2E2F20202030402 /* AddThemeSheet.swift in Sources */,
+				AA03B3C3D3E3F30302030403 /* ThemeEditorSheet.swift in Sources */,
 				1B2C3D4E5F6A7B8C9D0E1F00 /* ProceduralBackground.swift in Sources */,
 				587F7C324392E5B9A2EC1A31 /* ContentView.swift in Sources */,
 				EF4BF5AB0A720654806A7AAE /* DesktopMode.swift in Sources */,
