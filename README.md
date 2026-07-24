@@ -233,7 +233,6 @@ Pomo/
 │   └── PomoIntents.swift      # App Intents for widget actions
 ├── Widget/
 │   └── PomoWidget.swift       # macOS widget extension
-├── Media/                     # Bundled still images for themes
 └── project.yml                # XcodeGen project specification
 ```
 

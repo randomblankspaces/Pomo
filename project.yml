@@ -20,8 +20,6 @@ targets:
     sources:
       - App
       - Shared
-      - path: Media
-        buildPhase: resources
     entitlements:
       path: App/Pomo.entitlements
       properties:
