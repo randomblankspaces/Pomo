@@ -187,28 +187,69 @@ extension PomoState {
 // MARK: - Shared store (App Group)
 
 enum PomoStore {
-    static let appGroup: String = {
-        let teamPrefix = Bundle.main.infoDictionary?["AppIdentifierPrefix"] as? String
-            ?? (Bundle.main.bundleIdentifier.map { _ in "" } ?? "")
-        return "\(teamPrefix)com.pomo.app"
-    }()
     static let stateKey = "pomoState.v1"
     static let changeNote = "com.pomo.app.stateChanged"
 
-    static var defaults: UserDefaults {
-        UserDefaults(suiteName: appGroup) ?? .standard
+    /// Group identifiers to try, most specific first. Xcode injects
+    /// `AppIdentifierPrefix` when signing against a real team; an ad-hoc signed
+    /// build has no prefix at all and its entitlement carries the bare name.
+    /// Trying both means one binary works either way.
+    private static var groupCandidates: [String] {
+        var out: [String] = []
+        if let prefix = Bundle.main.infoDictionary?["AppIdentifierPrefix"] as? String,
+           !prefix.isEmpty {
+            out.append("\(prefix)com.pomo.app")
+        }
+        out.append("com.pomo.app")
+        return out
+    }
+
+    /// A file inside the app-group container, which the app and the widget both
+    /// resolve to the same path.
+    ///
+    /// A shared `UserDefaults` suite cannot do this job here. The app is not
+    /// sandboxed, so a suite name resolves to its own preferences domain in
+    /// ~/Library/Preferences; the widget *is* sandboxed, so the same name
+    /// resolves inside the group container. Each side reads and writes a
+    /// different file and the widget never sees the timer.
+    private static let stateURL: URL? = {
+        for id in groupCandidates {
+            guard let dir = FileManager.default
+                .containerURL(forSecurityApplicationGroupIdentifier: id) else { continue }
+            try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+            return dir.appendingPathComponent("pomoState.v1.json")
+        }
+        return nil
+    }()
+
+    /// Retained only to migrate state written by earlier versions.
+    private static var legacyDefaults: UserDefaults {
+        UserDefaults(suiteName: groupCandidates.first ?? "com.pomo.app") ?? .standard
     }
 
     static func load() -> PomoState {
-        guard let data = defaults.data(forKey: stateKey),
-              let state = try? JSONDecoder().decode(PomoState.self, from: data)
-        else { return PomoState() }
-        return state
+        if let url = stateURL,
+           let data = try? Data(contentsOf: url),
+           let state = try? JSONDecoder().decode(PomoState.self, from: data) {
+            return state
+        }
+        // Fall back to where older builds kept it, so an upgrade doesn't reset
+        // anyone's timer or settings.
+        if let data = legacyDefaults.data(forKey: stateKey) ?? UserDefaults.standard.data(forKey: stateKey),
+           let state = try? JSONDecoder().decode(PomoState.self, from: data) {
+            return state
+        }
+        return PomoState()
     }
 
     static func save(_ state: PomoState) {
-        if let data = try? JSONEncoder().encode(state) {
-            defaults.set(data, forKey: stateKey)
+        guard let data = try? JSONEncoder().encode(state) else { return }
+        if let url = stateURL {
+            try? data.write(to: url, options: .atomic)
+        } else {
+            // No container available: better a working app with a stale widget
+            // than an app that cannot persist at all.
+            legacyDefaults.set(data, forKey: stateKey)
         }
     }
 
