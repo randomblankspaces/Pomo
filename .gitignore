@@ -33,3 +33,6 @@ Package.resolved
 
 # User videos (large files, not for git)
 Videos/
+
+# Release build scratch (artifacts themselves live in publish/ and are tracked)
+publish/*.log
