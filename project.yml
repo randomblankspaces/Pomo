@@ -1,0 +1,66 @@
+name: Pomo
+options:
+  bundleIdPrefix: com.pomo
+  deploymentTarget:
+    macOS: "14.0"
+settings:
+  base:
+    DEVELOPMENT_TEAM: YOUR_TEAM_ID
+    CODE_SIGN_STYLE: Manual
+    CODE_SIGN_IDENTITY: "Apple Development"
+    SWIFT_VERSION: "5.0"
+    MACOSX_DEPLOYMENT_TARGET: "14.0"
+    ENABLE_HARDENED_RUNTIME: NO
+    CURRENT_PROJECT_VERSION: 1
+    MARKETING_VERSION: 1.0
+targets:
+  Pomo:
+    type: application
+    platform: macOS
+    sources:
+      - App
+      - Shared
+      - path: Media
+        buildPhase: resources
+    entitlements:
+      path: App/Pomo.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - $(TeamIdentifierPrefix)com.pomo.app
+        com.apple.security.automation.apple-events: true
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: Pomo
+        LSApplicationCategoryType: public.app-category.productivity
+        NSAppleEventsUsageDescription: Pomo controls Spotify to play focus music alongside your timer.
+        NSHumanReadableCopyright: ""
+    dependencies:
+      - target: PomoWidget
+        embed: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.pomo.app
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+  PomoWidget:
+    type: app-extension
+    platform: macOS
+    sources:
+      - Widget
+      - Shared
+    entitlements:
+      path: Widget/PomoWidget.entitlements
+      properties:
+        com.apple.security.app-sandbox: true
+        com.apple.security.application-groups:
+          - $(TeamIdentifierPrefix)com.pomo.app
+    info:
+      path: Widget/Info.plist
+      properties:
+        CFBundleDisplayName: Pomo Widget
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.pomo.app.widget
+        SKIP_INSTALL: YES

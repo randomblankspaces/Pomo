@@ -1,0 +1,566 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		04CE1A7B2F3E8D0A1B6C49F0 /* ColorExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F2E83C5D1B09E4F6A38D21 /* ColorExtractor.swift */; };
+		09AEE061F6CF0BF9D729AC47 /* FXLayers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D42E579ADA5458CE3F1966B /* FXLayers.swift */; };
+		12F3B03233C83DDE4E73F3B5 /* HabitTrackerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166D812EA8587999632BBB7F /* HabitTrackerView.swift */; };
+		185F7C85736744633160C751 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21170AD649A44BE646C24D9F /* Theme.swift */; };
+		25B7B8E296E6D6FC6B9A1111 /* bg-swamp.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F6BD57C914608CFBB85F67F5 /* bg-swamp.jpg */; };
+		2A3A8B5AAC8290145F0EC759 /* PomoIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334DCA615B38C7F2E3AC6424 /* PomoIntents.swift */; };
+		311EDE3B75866BF67700B814 /* bg-autumn.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3287C168B6CF149460BFC113 /* bg-autumn.jpg */; };
+		3C8708C4876ED88D0484FFC3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D3E513BF101EAC6D5CF76C /* SettingsView.swift */; };
+		466F7152D98F53B7B7240479 /* InteractiveFX.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EC09390ED08DF6D8C4C801 /* InteractiveFX.swift */; };
+		4EC769D93C0BC2D05EE05B65 /* bg-meadow.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8105F0A8A67277571119451A /* bg-meadow.jpg */; };
+		587F7C324392E5B9A2EC1A31 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE45544DCD74D868E4310D8 /* ContentView.swift */; };
+		5ADF8EAFAAE89F50094E830C /* TimerCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C343844DCAF83D5F4C4A7806 /* TimerCore.swift */; };
+		5E0DEF6462C37B991B7CF167 /* PomoEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3762AC96C835E4CBD39035 /* PomoEngine.swift */; };
+		6A10D8D7698ABC5839CA7328 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21170AD649A44BE646C24D9F /* Theme.swift */; };
+		7DD39CD5BDE0B5D49B3F086D /* PomoWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7B67DD4B6AEC46B813FD0A /* PomoWidget.swift */; };
+		82AF68EDEF6252A8D0E0D73D /* bg-synthwave.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 013272231C3DEB01F35D3BE9 /* bg-synthwave.jpg */; };
+		8A09DBB2B9A4BA8C8A231EFE /* SceneArt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CE377E11F904DDE7E5451 /* SceneArt.swift */; };
+		8AE690FDFE974B28227A03D9 /* bg-initiald.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 43C437EA2CEA482F644B5F73 /* bg-initiald.jpg */; };
+		8F21535033945D65999BECD1 /* ImmersiveMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D4724DE6381174A3860246 /* ImmersiveMode.swift */; };
+		A82CAD799972EDE2C6E3ED59 /* bg-sakura.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 86B310C500F5F433B5CDAB59 /* bg-sakura.jpg */; };
+		AD8523DF2114167039FF3991 /* bg-pixelcity.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1F9C79EDD00AF7F54DD72683 /* bg-pixelcity.jpg */; };
+		B01F3DCF5D9AE87168D7ACA9 /* VideoBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1EDB8F9DC2D4C8A4297B8E /* VideoBackground.swift */; };
+		B0A1F5C2F5868AF9416B1224 /* PomoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F64BA8EF606DFF35F60D2E /* PomoApp.swift */; };
+		BAB2854AF89F87546EA6C397 /* bg-desert.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E47DB6D22F40EAC1BC60CF6C /* bg-desert.jpg */; };
+		C2EE2346EFEDF7380ED14567 /* PomoIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334DCA615B38C7F2E3AC6424 /* PomoIntents.swift */; };
+		C85493ACAB3D4D03B072ECD4 /* TimerCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C343844DCAF83D5F4C4A7806 /* TimerCore.swift */; };
+		D565CACF4CE47BE9086CB3AF /* bg-blackhole.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FCEB082706ECDB0C47E7F5A4 /* bg-blackhole.jpg */; };
+		E08DEA0EF0AF03C97A07C2E9 /* Habits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2FA96A48E7B72282432259 /* Habits.swift */; };
+		EB75298580EB09B502658718 /* Spotify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D89C80D8ADBC2A247EED4BD /* Spotify.swift */; };
+		ECC1D1B3B8B1A71717BD36FD /* PomoWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 7F8F1F13C9E27AE764217EE7 /* PomoWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		EF4BF5AB0A720654806A7AAE /* DesktopMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2E68AC91C4178F762ABEAD /* DesktopMode.swift */; };
+		EF78E0EC7C0BD9ADEA2BB5F3 /* bg-irithyll.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CF451EE55E347F06E8078329 /* bg-irithyll.jpg */; };
+		F36EA0201980DC664DF654D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B9847A310B3F55B03007261 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		77D6E1AE96C8AA1981158965 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A401DF4A69076A3869D575E0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 74D9668B3FE012B37A9E56AB;
+			remoteInfo = PomoWidget;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4AC50EB0E4032E38314E157B /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				ECC1D1B3B8B1A71717BD36FD /* PomoWidget.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		013272231C3DEB01F35D3BE9 /* bg-synthwave.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bg-synthwave.jpg"; sourceTree = "<group>"; };
+		0CABA81DCD16049E1088325D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		0D42E579ADA5458CE3F1966B /* FXLayers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FXLayers.swift; sourceTree = "<group>"; };
+		A7F2E83C5D1B09E4F6A38D21 /* ColorExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtractor.swift; sourceTree = "<group>"; };
+		0EE45544DCD74D868E4310D8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		166D812EA8587999632BBB7F /* HabitTrackerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitTrackerView.swift; sourceTree = "<group>"; };
+		1E1EDB8F9DC2D4C8A4297B8E /* VideoBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoBackground.swift; sourceTree = "<group>"; };
+		1F9C79EDD00AF7F54DD72683 /* bg-pixelcity.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bg-pixelcity.jpg"; sourceTree = "<group>"; };
+		21170AD649A44BE646C24D9F /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		2D89C80D8ADBC2A247EED4BD /* Spotify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spotify.swift; sourceTree = "<group>"; };
+		3287C168B6CF149460BFC113 /* bg-autumn.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bg-autumn.jpg"; sourceTree = "<group>"; };
+		334DCA615B38C7F2E3AC6424 /* PomoIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomoIntents.swift; sourceTree = "<group>"; };
+		43C437EA2CEA482F644B5F73 /* bg-initiald.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bg-initiald.jpg"; sourceTree = "<group>"; };
+		5C2FA96A48E7B72282432259 /* Habits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habits.swift; sourceTree = "<group>"; };
+		5F7B67DD4B6AEC46B813FD0A /* PomoWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomoWidget.swift; sourceTree = "<group>"; };
+		6B18AFD638AFD61FB867CBB2 /* Pomo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Pomo.entitlements; sourceTree = "<group>"; };
+		7210EEDBBE64FE019818857E /* PomoWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PomoWidget.entitlements; sourceTree = "<group>"; };
+		7E2E68AC91C4178F762ABEAD /* DesktopMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesktopMode.swift; sourceTree = "<group>"; };
+		7F8F1F13C9E27AE764217EE7 /* PomoWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PomoWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		8105F0A8A67277571119451A /* bg-meadow.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bg-meadow.jpg"; sourceTree = "<group>"; };
+		86B310C500F5F433B5CDAB59 /* bg-sakura.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bg-sakura.jpg"; sourceTree = "<group>"; };
+		8B9847A310B3F55B03007261 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		941CE377E11F904DDE7E5451 /* SceneArt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneArt.swift; sourceTree = "<group>"; };
+		9C3762AC96C835E4CBD39035 /* PomoEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomoEngine.swift; sourceTree = "<group>"; };
+		9E41EDB3099004090C91136E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		A5D3E513BF101EAC6D5CF76C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		B1D4724DE6381174A3860246 /* ImmersiveMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImmersiveMode.swift; sourceTree = "<group>"; };
+		B5F64BA8EF606DFF35F60D2E /* PomoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomoApp.swift; sourceTree = "<group>"; };
+		BC067D39F481EF9AF1A2DC83 /* Pomo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pomo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C343844DCAF83D5F4C4A7806 /* TimerCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerCore.swift; sourceTree = "<group>"; };
+		CF451EE55E347F06E8078329 /* bg-irithyll.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bg-irithyll.jpg"; sourceTree = "<group>"; };
+		D0EC09390ED08DF6D8C4C801 /* InteractiveFX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveFX.swift; sourceTree = "<group>"; };
+		E47DB6D22F40EAC1BC60CF6C /* bg-desert.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bg-desert.jpg"; sourceTree = "<group>"; };
+		F6BD57C914608CFBB85F67F5 /* bg-swamp.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bg-swamp.jpg"; sourceTree = "<group>"; };
+		FCEB082706ECDB0C47E7F5A4 /* bg-blackhole.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bg-blackhole.jpg"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		3AD8495E642494F4416A0F27 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BC067D39F481EF9AF1A2DC83 /* Pomo.app */,
+				7F8F1F13C9E27AE764217EE7 /* PomoWidget.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		41C4EEA780FFC7E8C1F06DF9 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				334DCA615B38C7F2E3AC6424 /* PomoIntents.swift */,
+				21170AD649A44BE646C24D9F /* Theme.swift */,
+				C343844DCAF83D5F4C4A7806 /* TimerCore.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		670256CEDB45C474BE7E2215 /* Widget */ = {
+			isa = PBXGroup;
+			children = (
+				9E41EDB3099004090C91136E /* Info.plist */,
+				7210EEDBBE64FE019818857E /* PomoWidget.entitlements */,
+				5F7B67DD4B6AEC46B813FD0A /* PomoWidget.swift */,
+			);
+			path = Widget;
+			sourceTree = "<group>";
+		};
+		6AFF6D5D9ED06176CBA4CFD7 /* Media */ = {
+			isa = PBXGroup;
+			children = (
+				3287C168B6CF149460BFC113 /* bg-autumn.jpg */,
+				FCEB082706ECDB0C47E7F5A4 /* bg-blackhole.jpg */,
+				E47DB6D22F40EAC1BC60CF6C /* bg-desert.jpg */,
+				43C437EA2CEA482F644B5F73 /* bg-initiald.jpg */,
+				CF451EE55E347F06E8078329 /* bg-irithyll.jpg */,
+				8105F0A8A67277571119451A /* bg-meadow.jpg */,
+				1F9C79EDD00AF7F54DD72683 /* bg-pixelcity.jpg */,
+				86B310C500F5F433B5CDAB59 /* bg-sakura.jpg */,
+				F6BD57C914608CFBB85F67F5 /* bg-swamp.jpg */,
+				013272231C3DEB01F35D3BE9 /* bg-synthwave.jpg */,
+			);
+			path = Media;
+			sourceTree = "<group>";
+		};
+		BC8E5A0070777CBE418B567F = {
+			isa = PBXGroup;
+			children = (
+				CDEEF0191AB9B4E7EFC60A67 /* App */,
+				6AFF6D5D9ED06176CBA4CFD7 /* Media */,
+				41C4EEA780FFC7E8C1F06DF9 /* Shared */,
+				670256CEDB45C474BE7E2215 /* Widget */,
+				3AD8495E642494F4416A0F27 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CDEEF0191AB9B4E7EFC60A67 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				8B9847A310B3F55B03007261 /* Assets.xcassets */,
+				A7F2E83C5D1B09E4F6A38D21 /* ColorExtractor.swift */,
+				0EE45544DCD74D868E4310D8 /* ContentView.swift */,
+				7E2E68AC91C4178F762ABEAD /* DesktopMode.swift */,
+				0D42E579ADA5458CE3F1966B /* FXLayers.swift */,
+				5C2FA96A48E7B72282432259 /* Habits.swift */,
+				166D812EA8587999632BBB7F /* HabitTrackerView.swift */,
+				B1D4724DE6381174A3860246 /* ImmersiveMode.swift */,
+				0CABA81DCD16049E1088325D /* Info.plist */,
+				D0EC09390ED08DF6D8C4C801 /* InteractiveFX.swift */,
+				6B18AFD638AFD61FB867CBB2 /* Pomo.entitlements */,
+				B5F64BA8EF606DFF35F60D2E /* PomoApp.swift */,
+				9C3762AC96C835E4CBD39035 /* PomoEngine.swift */,
+				941CE377E11F904DDE7E5451 /* SceneArt.swift */,
+				A5D3E513BF101EAC6D5CF76C /* SettingsView.swift */,
+				2D89C80D8ADBC2A247EED4BD /* Spotify.swift */,
+				1E1EDB8F9DC2D4C8A4297B8E /* VideoBackground.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		74D9668B3FE012B37A9E56AB /* PomoWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B721F9E238E05FA57D0CBA2F /* Build configuration list for PBXNativeTarget "PomoWidget" */;
+			buildPhases = (
+				44A54B3C67D167CE41F4A5BD /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PomoWidget;
+			packageProductDependencies = (
+			);
+			productName = PomoWidget;
+			productReference = 7F8F1F13C9E27AE764217EE7 /* PomoWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		85A96DA24DC4D246384E85FA /* Pomo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 975BD2DD478E2EC569D0B44F /* Build configuration list for PBXNativeTarget "Pomo" */;
+			buildPhases = (
+				437FA0F9C7BCFE4D2A1BB76D /* Sources */,
+				196827F54D1B0FDF31C59807 /* Resources */,
+				4AC50EB0E4032E38314E157B /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5A78C3328880DA54A5CCF8A4 /* PBXTargetDependency */,
+			);
+			name = Pomo;
+			packageProductDependencies = (
+			);
+			productName = Pomo;
+			productReference = BC067D39F481EF9AF1A2DC83 /* Pomo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A401DF4A69076A3869D575E0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					74D9668B3FE012B37A9E56AB = {
+						DevelopmentTeam = YOUR_TEAM_ID;
+						ProvisioningStyle = Manual;
+					};
+					85A96DA24DC4D246384E85FA = {
+						DevelopmentTeam = YOUR_TEAM_ID;
+						ProvisioningStyle = Manual;
+					};
+				};
+			};
+			buildConfigurationList = 20508055B04B0E281CB0DF6E /* Build configuration list for PBXProject "Pomo" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = BC8E5A0070777CBE418B567F;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 3AD8495E642494F4416A0F27 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				85A96DA24DC4D246384E85FA /* Pomo */,
+				74D9668B3FE012B37A9E56AB /* PomoWidget */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		196827F54D1B0FDF31C59807 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F36EA0201980DC664DF654D8 /* Assets.xcassets in Resources */,
+				311EDE3B75866BF67700B814 /* bg-autumn.jpg in Resources */,
+				D565CACF4CE47BE9086CB3AF /* bg-blackhole.jpg in Resources */,
+				BAB2854AF89F87546EA6C397 /* bg-desert.jpg in Resources */,
+				8AE690FDFE974B28227A03D9 /* bg-initiald.jpg in Resources */,
+				EF78E0EC7C0BD9ADEA2BB5F3 /* bg-irithyll.jpg in Resources */,
+				4EC769D93C0BC2D05EE05B65 /* bg-meadow.jpg in Resources */,
+				AD8523DF2114167039FF3991 /* bg-pixelcity.jpg in Resources */,
+				A82CAD799972EDE2C6E3ED59 /* bg-sakura.jpg in Resources */,
+				25B7B8E296E6D6FC6B9A1111 /* bg-swamp.jpg in Resources */,
+				82AF68EDEF6252A8D0E0D73D /* bg-synthwave.jpg in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		437FA0F9C7BCFE4D2A1BB76D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				04CE1A7B2F3E8D0A1B6C49F0 /* ColorExtractor.swift in Sources */,
+				587F7C324392E5B9A2EC1A31 /* ContentView.swift in Sources */,
+				EF4BF5AB0A720654806A7AAE /* DesktopMode.swift in Sources */,
+				09AEE061F6CF0BF9D729AC47 /* FXLayers.swift in Sources */,
+				12F3B03233C83DDE4E73F3B5 /* HabitTrackerView.swift in Sources */,
+				E08DEA0EF0AF03C97A07C2E9 /* Habits.swift in Sources */,
+				8F21535033945D65999BECD1 /* ImmersiveMode.swift in Sources */,
+				466F7152D98F53B7B7240479 /* InteractiveFX.swift in Sources */,
+				B0A1F5C2F5868AF9416B1224 /* PomoApp.swift in Sources */,
+				5E0DEF6462C37B991B7CF167 /* PomoEngine.swift in Sources */,
+				C2EE2346EFEDF7380ED14567 /* PomoIntents.swift in Sources */,
+				8A09DBB2B9A4BA8C8A231EFE /* SceneArt.swift in Sources */,
+				3C8708C4876ED88D0484FFC3 /* SettingsView.swift in Sources */,
+				EB75298580EB09B502658718 /* Spotify.swift in Sources */,
+				6A10D8D7698ABC5839CA7328 /* Theme.swift in Sources */,
+				5ADF8EAFAAE89F50094E830C /* TimerCore.swift in Sources */,
+				B01F3DCF5D9AE87168D7ACA9 /* VideoBackground.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		44A54B3C67D167CE41F4A5BD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A3A8B5AAC8290145F0EC759 /* PomoIntents.swift in Sources */,
+				7DD39CD5BDE0B5D49B3F086D /* PomoWidget.swift in Sources */,
+				185F7C85736744633160C751 /* Theme.swift in Sources */,
+				C85493ACAB3D4D03B072ECD4 /* TimerCore.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5A78C3328880DA54A5CCF8A4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 74D9668B3FE012B37A9E56AB /* PomoWidget */;
+			targetProxy = 77D6E1AE96C8AA1981158965 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		1E2A3F5EF8A5B2746B609DA3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = App/Pomo.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = App/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.pomo.app;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		301FFD33A8ED6A3E244C741C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = App/Pomo.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = App/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.pomo.app;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		4CAD1133A605291FAA774F37 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Widget/PomoWidget.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Widget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.pomo.app.widget;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		75900FE18DAEB30124C1BC80 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = YOUR_TEAM_ID;
+				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		7AE5A5FC16AB9C358BEFDC5C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Widget/PomoWidget.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Widget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.pomo.app.widget;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		F4195505C773F8EE02B22252 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = YOUR_TEAM_ID;
+				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		20508055B04B0E281CB0DF6E /* Build configuration list for PBXProject "Pomo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F4195505C773F8EE02B22252 /* Debug */,
+				75900FE18DAEB30124C1BC80 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		975BD2DD478E2EC569D0B44F /* Build configuration list for PBXNativeTarget "Pomo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				301FFD33A8ED6A3E244C741C /* Debug */,
+				1E2A3F5EF8A5B2746B609DA3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		B721F9E238E05FA57D0CBA2F /* Build configuration list for PBXNativeTarget "PomoWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4CAD1133A605291FAA774F37 /* Debug */,
+				7AE5A5FC16AB9C358BEFDC5C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A401DF4A69076A3869D575E0 /* Project object */;
+}
