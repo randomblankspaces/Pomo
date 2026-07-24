@@ -20,6 +20,30 @@ Pass a different version to change the filenames. The script builds Release,
 verifies the signature, refuses to package if anything personal or any video
 file ended up in the bundle, then writes the zip, the dmg, and the checksums.
 
+## Release checklist
+
+What was checked before tagging 1.0. Worth re-running for any later version —
+the first four are automated inside `make-release.sh`.
+
+- [x] Release build succeeds from a **clean clone** with only the team ID substituted
+- [x] Signature valid, and carries **no developer identity** (would leak an Apple ID email)
+- [x] No `.mp4` / `.mov` / `.m4v` or user data inside the bundle
+- [x] Checksums recorded and verified against the files on disk
+- [x] DMG mounts, app launches from it, widget extension embedded
+- [x] Zip round-trip preserves the code signature
+- [x] Quarantine genuinely blocks the app, and the documented `xattr` fix genuinely clears it
+- [x] App ↔ widget shared state verified across two processes, and confirmed
+      present in the **shipped** artifact rather than only in source
+- [x] No secrets, absolute home paths, or personal identifiers in tracked source
+- [x] `YOUR_TEAM_ID` placeholders still in place, so nobody inherits a real team
+
+Known and accepted for this release:
+
+- The app is **not notarized** — see below. Users clear quarantine once.
+- Two built-in themes are named after existing works (*Initial D*, and *Boreal
+  Valley* from Dark Souls III), and the screenshots show that footage. Fine for
+  a hobby project; rename them if the repo ever wants a cleaner footing.
+
 ## Why the app is ad-hoc signed
 
 Distributing a signed, notarized macOS app needs a paid Apple Developer

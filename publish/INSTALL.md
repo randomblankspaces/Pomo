@@ -67,13 +67,28 @@ You can also drop files straight into that folder; they're picked up on the next
 
 ---
 
+## The widget
+
+Pomo installs a widget alongside the app. To add it: right-click your desktop
+→ **Edit Widgets**, search for **Pomo**, and drag it out. It mirrors the timer
+live, and its start / pause / skip buttons drive the app.
+
+The widget only appears in the picker after you've launched Pomo at least once
+from Applications.
+
+---
+
 ## Uninstalling
 
-Drag `Pomo.app` to the Trash, then remove its data if you want it gone completely:
+Drag `Pomo.app` to the Trash, then remove its data if you want it gone
+completely:
 
 ```bash
 rm -rf ~/Library/Application\ Support/Pomo
+rm -rf ~/Library/Group\ Containers/com.pomo.app
 defaults delete com.pomo.app
 ```
 
-Note that `~/Library/Application Support/Pomo/Videos/` holds any videos you imported — move them out first if you want to keep them.
+The second path is the timer state the app and widget share; the first holds
+your settings **and any videos you imported** — move those out first if you
+want to keep them.
