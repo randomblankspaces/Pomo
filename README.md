@@ -4,6 +4,34 @@ A beautiful, immersive pomodoro timer for macOS with live video wallpapers, inte
 
 Pomo turns your entire desktop into a focused work environment — looping cinematic video backgrounds, reactive particle systems that respond to your cursor, and a system-wide immersive mode that syncs your wallpaper, dark mode, and accent color to the current theme.
 
+![Sakura Moon](Screenshots/desktop-sakura.jpg)
+
+<details>
+<summary>More themes</summary>
+
+| | |
+|---|---|
+| ![Irithyll](Screenshots/desktop-irithyll.jpg) | ![Synthwave](Screenshots/desktop-synthwave.jpg) |
+| Boreal Valley — snowfall particles | Neon Sunset — pixel & code rain |
+| ![Blackhole](Screenshots/desktop-blackhole.jpg) | ![Initial D](Screenshots/desktop-initiald.jpg) |
+| Event Horizon — gravity well particles | Initial D — 3D rain |
+| ![Autumn](Screenshots/desktop-autumn.jpg) | ![Swamp](Screenshots/desktop-swamp.jpg) |
+| Autumn Shrine — falling leaves | Swamp Spirit — fireflies |
+| ![Desert](Screenshots/desktop-desert.jpg) | ![Meadow](Screenshots/desktop-meadow.jpg) |
+| Mojave Night — sand drift | Moonlit Meadow — fireflies & pond |
+| ![Pixel City](Screenshots/desktop-pixelcity.jpg) | |
+| Pixel City — 8-bit pixels & code rain | |
+
+</details>
+
+### Habit Tracker
+
+Side panels with daily habit tracking, completion ring, and calendar heatmap — toggleable with one click.
+
+| Habits enabled | Habits disabled |
+|---|---|
+| ![With habits](Screenshots/desktop-sakura-habits.jpg) | ![Without habits](Screenshots/desktop-sakura-nohabits.jpg) |
+
 ---
 
 ## Features
