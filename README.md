@@ -125,16 +125,18 @@ you like and Pomo builds the theme around it.
 
 | | |
 |---|---|
-| ![Boreal Valley](Screenshots/desktop-irithyll.jpg) | ![Neon Sunset](Screenshots/desktop-synthwave.jpg) |
-| **Boreal Valley** — snowfall | **Neon Sunset** — starfield |
-| ![Event Horizon](Screenshots/desktop-blackhole.jpg) | ![Initial D](Screenshots/desktop-initiald.jpg) |
-| **Event Horizon** — gravity well | **Initial D** — 3D rain |
-| ![Autumn Shrine](Screenshots/desktop-autumn.jpg) | ![Swamp Spirit](Screenshots/desktop-swamp.jpg) |
-| **Autumn Shrine** — falling leaves | **Swamp Spirit** — pond leaves |
-| ![Mojave Night](Screenshots/desktop-desert.jpg) | ![Moonlit Meadow](Screenshots/desktop-meadow.jpg) |
-| **Mojave Night** — sand drift, starfield | **Moonlit Meadow** — fireflies |
-| ![Pixel City](Screenshots/desktop-pixelcity.jpg) | ![Sakura Moon](Screenshots/desktop-sakura.jpg) |
-| **Pixel City** — 8-bit pixels, 3D rain | **Sakura Moon** — falling petals |
+| ![Sakura Moon](Screenshots/themes/sakura.gif) | ![Boreal Valley](Screenshots/themes/irithyll.gif) |
+| **Sakura Moon** — falling petals | **Boreal Valley** — snowfall |
+| ![Neon Sunset](Screenshots/themes/synthwave.gif) | ![Event Horizon](Screenshots/themes/blackhole.gif) |
+| **Neon Sunset** — starfield | **Event Horizon** — gravity well |
+| ![Initial D](Screenshots/themes/initiald.gif) | ![Autumn Shrine](Screenshots/themes/autumn.gif) |
+| **Initial D** — 3D rain | **Autumn Shrine** — falling leaves |
+| ![Swamp Spirit](Screenshots/themes/swamp.gif) | ![Mojave Night](Screenshots/themes/desert.gif) |
+| **Swamp Spirit** — pond leaves | **Mojave Night** — sand drift, starfield |
+| ![Moonlit Meadow](Screenshots/themes/meadow.gif) | ![Pixel City](Screenshots/themes/pixelcity.gif) |
+| **Moonlit Meadow** — fireflies | **Pixel City** — 8-bit pixels, 3D rain |
+
+Still versions of each are in [`Screenshots/`](Screenshots) if the animations are heavy on your connection.
 
 <details>
 <summary><b>All 25 built-in themes</b></summary>
