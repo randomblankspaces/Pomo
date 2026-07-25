@@ -4,16 +4,56 @@ A pomodoro timer for macOS that takes over your desktop — live video wallpaper
 
 ![Pomo](Screenshots/desktop-sakura.jpg)
 
-> The videos in these screenshots are the author's own and are **not** included in the repo. Pomo ships with 25 built-in themes that render procedurally, and you add your own videos in a couple of clicks — see [Add your own theme](#add-your-own-theme).
+> **The videos are not included.** Pomo ships with 25 built-in themes that render
+> procedurally, and you add your own videos in a couple of clicks — see
+> [Add your own theme](#add-your-own-theme). The live wallpapers in these
+> screenshots came from [moewalls.com](https://moewalls.com), which is where I
+> get mine; any `.mp4`, `.mov`, or `.m4v` works.
 
 ---
 
-## Quick start
+## Install
+
+**Requires macOS 14 (Sonoma) or later.**
+
+Grab [`Pomo-1.0.dmg`](publish/Pomo-1.0.dmg) (or [the zip](publish/Pomo-1.0.zip)) and drag Pomo into Applications.
+
+**Then run this once**, or macOS will refuse to open it:
+
+```bash
+xattr -dr com.apple.quarantine /Applications/Pomo.app
+```
+
+<details>
+<summary>Why is that needed?</summary>
+
+Pomo is signed ad-hoc rather than with a paid Apple Developer certificate
+($99/yr), so it isn't notarized. macOS quarantines anything unnotarized that
+arrives from the internet and shows *"Apple could not verify Pomo is free of
+malware"* — with no Open button, so it looks like a dead end. The command above
+clears the quarantine flag. Afterwards Pomo launches normally, forever, with
+nothing disabled.
+
+You can also do it through the UI: double-click Pomo, dismiss the warning, then
+**System Settings → Privacy & Security → Open Anyway**. Note that Control-click →
+*Open*, which older guides recommend, no longer works for unsigned apps on
+macOS 15+.
+
+Building from source avoids all of this — quarantine is only attached to
+browser downloads.
+
+</details>
+
+Full steps, permissions, and uninstall notes are in [publish/INSTALL.md](publish/INSTALL.md).
+
+---
+
+## Build from source
 
 **You need:** macOS 14 (Sonoma) or later, and Xcode 15+.
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/Pomo.git
+git clone https://github.com/randomblankspaces/Pomo.git
 cd Pomo
 ```
 
@@ -77,23 +117,24 @@ Measured against the 25 hand-tuned built-in themes, this reproduces the intended
 
 **Battery saver** — drops to 1080p video decode when unplugged.
 
-<details>
-<summary><b>More screenshots</b></summary>
+## Themes
+
+Each pairs a palette with its own particle system. Backgrounds here are live
+video wallpapers from [moewalls.com](https://moewalls.com) — swap in anything
+you like and Pomo builds the theme around it.
 
 | | |
 |---|---|
-| ![Irithyll](Screenshots/desktop-irithyll.jpg) | ![Synthwave](Screenshots/desktop-synthwave.jpg) |
-| Boreal Valley — snowfall | Neon Sunset — starfield |
-| ![Blackhole](Screenshots/desktop-blackhole.jpg) | ![Initial D](Screenshots/desktop-initiald.jpg) |
-| Event Horizon — gravity well | Initial D — 3D rain |
-| ![Autumn](Screenshots/desktop-autumn.jpg) | ![Swamp](Screenshots/desktop-swamp.jpg) |
-| Autumn Shrine — falling leaves | Swamp Spirit — pond leaves |
-| ![Desert](Screenshots/desktop-desert.jpg) | ![Meadow](Screenshots/desktop-meadow.jpg) |
-| Mojave Night — sand drift, starfield | Moonlit Meadow — fireflies |
+| ![Boreal Valley](Screenshots/desktop-irithyll.jpg) | ![Neon Sunset](Screenshots/desktop-synthwave.jpg) |
+| **Boreal Valley** — snowfall | **Neon Sunset** — starfield |
+| ![Event Horizon](Screenshots/desktop-blackhole.jpg) | ![Initial D](Screenshots/desktop-initiald.jpg) |
+| **Event Horizon** — gravity well | **Initial D** — 3D rain |
+| ![Autumn Shrine](Screenshots/desktop-autumn.jpg) | ![Swamp Spirit](Screenshots/desktop-swamp.jpg) |
+| **Autumn Shrine** — falling leaves | **Swamp Spirit** — pond leaves |
+| ![Mojave Night](Screenshots/desktop-desert.jpg) | ![Moonlit Meadow](Screenshots/desktop-meadow.jpg) |
+| **Mojave Night** — sand drift, starfield | **Moonlit Meadow** — fireflies |
 | ![Pixel City](Screenshots/desktop-pixelcity.jpg) | |
-| Pixel City — 8-bit pixels, 3D rain | |
-
-</details>
+| **Pixel City** — 8-bit pixels, 3D rain | |
 
 <details>
 <summary><b>All 25 built-in themes</b></summary>
@@ -211,6 +252,16 @@ brew install xcodegen && xcodegen generate
 - **Screen Recording** — only for the Glass theme, which reads your wallpaper
 
 Pomo makes no network requests. Nothing leaves your machine.
+
+---
+
+## Credits
+
+Live wallpapers in the screenshots are from [moewalls.com](https://moewalls.com).
+They are not redistributed here — Pomo ships with no video files, and you supply
+your own.
+
+Built with SwiftUI, WidgetKit, AVFoundation, and Core Animation.
 
 ---
 
