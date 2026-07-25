@@ -2,7 +2,7 @@
 
 A pomodoro timer for macOS that takes over your desktop — live video wallpapers, interactive particle effects, and themes generated automatically from whatever video you drop in.
 
-![Pomo](Screenshots/desktop-sakura.jpg)
+![Pomo demo](Screenshots/demo.gif)
 
 > **The videos are not included.** Pomo ships with 25 built-in themes that render
 > procedurally, and you add your own videos in a couple of clicks — see
@@ -133,8 +133,8 @@ you like and Pomo builds the theme around it.
 | **Autumn Shrine** — falling leaves | **Swamp Spirit** — pond leaves |
 | ![Mojave Night](Screenshots/desktop-desert.jpg) | ![Moonlit Meadow](Screenshots/desktop-meadow.jpg) |
 | **Mojave Night** — sand drift, starfield | **Moonlit Meadow** — fireflies |
-| ![Pixel City](Screenshots/desktop-pixelcity.jpg) | |
-| **Pixel City** — 8-bit pixels, 3D rain | |
+| ![Pixel City](Screenshots/desktop-pixelcity.jpg) | ![Sakura Moon](Screenshots/desktop-sakura.jpg) |
+| **Pixel City** — 8-bit pixels, 3D rain | **Sakura Moon** — falling petals |
 
 <details>
 <summary><b>All 25 built-in themes</b></summary>
